@@ -1,6 +1,7 @@
 import { cors } from '@elysiajs/cors';
 import { openapi } from '@elysiajs/openapi';
 import { Elysia } from 'elysia';
+import packageJson from '../package.json';
 import { GitHubDecorator } from './decorators/github';
 import { JwtDecorator } from './decorators/jwt';
 import { GitHubApiError, GitHubAuthUnauthorizedError, NullishError } from './errors';
@@ -12,11 +13,7 @@ import {
 } from './handlers/auth/github';
 import { authJwks } from './handlers/auth/jwks';
 
-const {
-	version: appVersion,
-	name: appName,
-	description: appDescription
-} = await Bun.file('./package.json').json();
+const { version: appVersion, name: appName, description: appDescription } = packageJson;
 
 export const app = new Elysia()
 	.error({
@@ -64,4 +61,6 @@ export const app = new Elysia()
 	)
 	.listen(3000);
 
-console.log(`🛰️  Juno API is running at ${app.server?.hostname}:${app.server?.port}`);
+console.log(
+	`🛰️  Juno API (v${appVersion}) is running at ${app.server?.hostname}:${app.server?.port}`
+);

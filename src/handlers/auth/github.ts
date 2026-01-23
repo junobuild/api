@@ -35,11 +35,24 @@ export const githubAuthInit = async ({
 
 	const state = await jwt.signOAuthJwt({ payload: stateData });
 
+	const production = Bun.env.NODE_ENV === 'production';
+	const cookieDomain = Bun.env.COOKIE_DOMAIN?.trim();
+	const cookieSameSite = Bun.env.COOKIE_SAME_SITE?.trim();
+
 	auth.set({
 		value: state,
 		httpOnly: true,
-		maxAge: 10 * 60, // 10 minutes, similar as the The GitHub OAuth authorization code which least 10 minutes
-		path: '/v1/auth/finalize/github'
+		maxAge: 10 * 60, // 10 minutes, similar as the GitHub OAuth authorization code which least 10 minutes
+		path: '/v1/auth/finalize/github',
+		...(production && {
+			...(cookieDomain !== undefined && cookieDomain !== '' && { domain: cookieDomain }),
+			...(cookieSameSite !== undefined &&
+				cookieSameSite !== '' &&
+				['strict', 'lax', 'none'].includes(cookieSameSite) && {
+					sameSite: cookieSameSite as 'strict' | 'lax' | 'none'
+				}),
+			secure: true
+		})
 	});
 
 	return { state };

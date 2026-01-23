@@ -1,6 +1,6 @@
 {
 	"name": "@junobuild/api",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Self-hostable API service for the Juno ecosystem",
 	"author": "David Dal Busco (https://daviddalbusco.com)",
 	"license": "MIT",

@@ -33,7 +33,17 @@ GITHUB_AUTH_ISSUER=https://your-domain.com/auth/github
 > [!NOTE]
 > The issuer must be unique for the service. The authentication modules use it to distinguish the providers.
 
-3. Start the container:
+3. (Optional) Configure cookie settings for cross-subdomain support in `.env.production`:
+
+```bash
+COOKIE_DOMAIN=.yourdomain.com
+COOKIE_SAME_SITE=lax
+```
+
+> [!TIP]
+> If your API runs on a different subdomain than your frontend (e.g., `api.yourdomain.com` and `app.yourdomain.com`), configure `COOKIE_DOMAIN` with a leading dot (e.g., `.yourdomain.com`) to enable cookie sharing across subdomains. Set `COOKIE_SAME_SITE` to `lax`, `strict`, or `none` as needed. If your API and frontend are on the same domain, you can omit `COOKIE_DOMAIN` or set it without the leading dot.
+
+4. Start the container:
 
 ```bash
 docker compose up -d

@@ -39,13 +39,16 @@ export class JwtDecorator {
 		issuer: string;
 		audience: string;
 	}): Promise<string> => {
+		const timestamp = new Date();
+
 		return new SignJWT(payload)
 			.setProtectedHeader({ alg: 'RS256', kid: JWT_KEY_ID })
 			.setSubject(subject)
 			.setIssuer(issuer)
 			.setAudience(audience)
 			.setExpirationTime('1h')
-			.setIssuedAt()
+			.setNotBefore(timestamp)
+			.setIssuedAt(timestamp)
 			.sign(privateKey);
 	};
 

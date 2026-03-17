@@ -56,6 +56,24 @@ describe('decorators > jwt', () => {
 			expect(diff).toBeGreaterThan(3500); // ~58 minutes
 			expect(diff).toBeLessThan(3700); // ~61 minutes
 		});
+
+		it('should set nbf equal to iat', async () => {
+			const token = await jwt.signOpenIdJwt({
+				payload: {},
+				subject: 'user-123',
+				issuer: 'test',
+				audience: 'test'
+			});
+
+			const result = await jwt.verify(token);
+
+			if (!result.valid) {
+				expect(true).toBeFalsy();
+				return;
+			}
+
+			expect(result.payload.nbf).toBe(result.payload.iat);
+		});
 	});
 
 	describe('signOAuthJwt', () => {

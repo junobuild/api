@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
 import { ExchangeDecorator } from '../../src/decorators/exchange';
+import { FetchApiError } from '../../src/errors';
 
 describe('decorators > exchange', () => {
 	const mockTickerPrice = { symbol: 'ICPUSDT', price: '2.23800000' };
@@ -73,9 +74,7 @@ describe('decorators > exchange', () => {
 		it('should throw on Binance API error', async () => {
 			spyOn(global, 'fetch').mockResolvedValueOnce(new Response('{}', { status: 500 }));
 
-			expect(exchange.fetchTickerPrice({ symbol: 'ICPUSDT' })).rejects.toThrow(
-				'Binance API error: 500'
-			);
+			expect(exchange.fetchTickerPrice({ symbol: 'ICPUSDT' })).rejects.toThrow(FetchApiError);
 		});
 
 		it('should throw on invalid response schema', async () => {

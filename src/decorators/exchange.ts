@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { FetchApiError } from '../errors';
 
 const BinanceTickerPriceSchema = z.strictObject({
 	symbol: z.string(),
@@ -19,11 +20,7 @@ const CACHE_TTL = 60_000;
 export class ExchangeDecorator {
 	#tickerPriceCache = new Map<BinanceTickerPrice['symbol'], ExchangeTickerPrice>();
 
-	fetchTickerPrice = async ({
-		symbol
-	}: {
-		symbol: string;
-	}): Promise<ExchangeTickerPrice> => {
+	fetchTickerPrice = async ({ symbol }: { symbol: string }): Promise<ExchangeTickerPrice> => {
 		const cached = this.#tickerPriceCache.get(symbol);
 
 		if (cached !== undefined && Date.now() < new Date(cached.fetchedAt).getTime() + CACHE_TTL) {
@@ -51,7 +48,7 @@ export class ExchangeDecorator {
 		);
 
 		if (!response.ok) {
-			throw new Error(`Binance API error: ${response.status}`);
+			throw new FetchApiError(response.status, `Binance API error: ${response.status}`);
 		}
 
 		const data = await response.json();

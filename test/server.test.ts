@@ -180,7 +180,7 @@ describe('server', () => {
 
 			const { app } = await import('../src/server');
 			const response = await app.handle(
-				new Request('http://localhost/v1/exchange/price?ledgerId=ryjl3-tyaaa-aaaaa-aaaba-cai')
+				new Request('http://localhost/v1/exchange/price/ryjl3-tyaaa-aaaaa-aaaba-cai')
 			);
 			const data = await response.json();
 
@@ -193,7 +193,7 @@ describe('server', () => {
 		it('should return 500 for unsupported ledger ID', async () => {
 			const { app } = await import('../src/server');
 			const response = await app.handle(
-				new Request('http://localhost/v1/exchange/price?ledgerId=unknown-ledger-id')
+				new Request('http://localhost/v1/exchange/price/unknown-ledger-id')
 			);
 
 			expect(response.status).toBe(500);
@@ -211,7 +211,7 @@ describe('server', () => {
 
 			const { app } = await import('../src/server');
 			const response = await app.handle(
-				new Request('http://localhost/v1/exchange/price?ledgerId=ryjl3-tyaaa-aaaaa-aaaba-cai')
+				new Request('http://localhost/v1/exchange/price/ryjl3-tyaaa-aaaaa-aaaba-cai')
 			);
 
 			expect(response.status).toBe(503);

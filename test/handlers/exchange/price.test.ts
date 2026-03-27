@@ -21,8 +21,8 @@ describe('handlers > exchange > price', () => {
 
 		const context = {
 			exchange,
-			query: { ledgerId: 'ryjl3-tyaaa-aaaaa-aaaba-cai' }
-		} as unknown as ApiContext<{ query: { ledgerId: string } }>;
+			params: { ledgerId: 'ryjl3-tyaaa-aaaaa-aaaba-cai' }
+		} as unknown as ApiContext<{ params: { ledgerId: string } }>;
 
 		const result = await exchangePrice(context);
 
@@ -35,8 +35,8 @@ describe('handlers > exchange > price', () => {
 
 		const context = {
 			exchange,
-			query: { ledgerId: 'unknown-ledger-id' }
-		} as unknown as ApiContext<{ query: { ledgerId: string } }>;
+			params: { ledgerId: 'unknown-ledger-id' }
+		} as unknown as ApiContext<{ params: { ledgerId: string } }>;
 
 		expect(exchangePrice(context)).rejects.toThrow('Ledger ID not supported');
 	});

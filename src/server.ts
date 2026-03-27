@@ -62,7 +62,9 @@ export const app = new Elysia()
 						app.get('/github', githubAuthInit, { query: GitHubAuthInitSchema })
 					)
 			)
-			.group('/exchange', (app) => app.get('/price', exchangePrice, { query: ExchangePriceSchema }))
+			.group('/exchange', (app) =>
+				app.get('/price/:ledgerId', exchangePrice, { params: ExchangePriceSchema })
+			)
 	)
 	.listen(3000);
 

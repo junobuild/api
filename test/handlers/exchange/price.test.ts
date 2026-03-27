@@ -7,7 +7,7 @@ describe('handlers > exchange > price', () => {
 	const mockTickerPrice = { symbol: 'ICPUSDT', price: '2.23800000' };
 
 	const mockExchangeTickerPrice = {
-		price: mockTickerPrice,
+		...mockTickerPrice,
 		fetchedAt: new Date().toISOString()
 	};
 

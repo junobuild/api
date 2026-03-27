@@ -22,7 +22,8 @@ describe('decorators > exchange', () => {
 
 			const result = await exchange.fetchPrice({ symbol: 'ICPUSDT' });
 
-			expect(result.price).toEqual(mockTickerPrice);
+			expect(result.symbol).toBe('ICPUSDT');
+			expect(result.price).toBe('2.23800000');
 			expect(result.fetchedAt).toBeString();
 			expect(new Date(result.fetchedAt).toISOString()).toBe(result.fetchedAt);
 		});

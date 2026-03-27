@@ -9,7 +9,7 @@ const BinanceTickerPriceSchema = z.strictObject({
 type BinanceTickerPrice = z.infer<typeof BinanceTickerPriceSchema>;
 
 const ExchangePriceSchema = z.strictObject({
-	price: BinanceTickerPriceSchema,
+	...BinanceTickerPriceSchema.shape,
 	fetchedAt: z.iso.datetime()
 });
 
@@ -29,7 +29,7 @@ export class ExchangeDecorator {
 
 		const price = await this.#fetchBinanceTickerPrice({ symbol });
 
-		const tickerPrice = { price, fetchedAt: new Date().toISOString() };
+		const tickerPrice = { ...price, fetchedAt: new Date().toISOString() };
 
 		this.#priceCache.set(symbol, tickerPrice);
 

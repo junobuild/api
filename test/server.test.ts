@@ -185,8 +185,8 @@ describe('server', () => {
 			const data = await response.json();
 
 			expect(response.status).toBe(200);
-			expect(data.price.price.symbol).toBe('ICPUSDT');
-			expect(data.price.price.price).toBe('2.23800000');
+			expect(data.price.symbol).toBe('ICPUSDT');
+			expect(data.price.price).toBe('2.23800000');
 			expect(data.price.fetchedAt).toBeString();
 		});
 

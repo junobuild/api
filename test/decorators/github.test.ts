@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
 import { GitHubDecorator } from '../../src/decorators/github';
-import { GitHubApiError } from '../../src/errors';
+import { FetchApiError } from '../../src/errors';
 
 describe('decorators > github', () => {
 	let github: GitHubDecorator;
@@ -61,7 +61,7 @@ describe('decorators > github', () => {
 			spyOn(global, 'fetch').mockResolvedValue(new Response('{}', { status: 401 }));
 
 			expect(github.exchangeGitHubCodeForAccessToken({ code: 'bad-code' })).rejects.toThrow(
-				GitHubApiError
+				FetchApiError
 			);
 		});
 
@@ -142,7 +142,7 @@ describe('decorators > github', () => {
 			spyOn(global, 'fetch').mockResolvedValue(new Response('{}', { status: 401 }));
 
 			expect(github.fetchGitHubUser({ accessToken: 'invalid-token' })).rejects.toThrow(
-				GitHubApiError
+				FetchApiError
 			);
 		});
 
@@ -151,7 +151,7 @@ describe('decorators > github', () => {
 
 			const error = await github.fetchGitHubUser({ accessToken: 'expired-token' }).catch((e) => e);
 
-			expect(error).toBeInstanceOf(GitHubApiError);
+			expect(error).toBeInstanceOf(FetchApiError);
 			expect(error.statusCode).toBe(403);
 		});
 

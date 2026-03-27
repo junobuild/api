@@ -1,4 +1,4 @@
-export class GitHubApiError extends Error {
+export class FetchApiError extends Error {
 	constructor(
 		readonly statusCode: number,
 		readonly message: string

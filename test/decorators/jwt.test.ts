@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from 'bun:test';
+import { afterEach, beforeAll, describe, expect, it, mock } from 'bun:test';
 import { JwtDecorator } from '../../src/decorators/jwt';
 
 describe('decorators > jwt', () => {
@@ -6,6 +6,11 @@ describe('decorators > jwt', () => {
 
 	beforeAll(() => {
 		jwt = new JwtDecorator();
+	});
+
+	afterEach(() => {
+		mock.clearAllMocks();
+		mock.restore();
 	});
 
 	describe('signOpenIdJwt', () => {

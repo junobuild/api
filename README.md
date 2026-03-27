@@ -11,6 +11,8 @@ This API is designed to be deployed independently, giving you full control over 
 - **GitHub:**
   - Proxy OAuth integration with JWT token generation
   - JWKS Endpoint: Public key discovery for the token verification by Juno's authentication module
+- **Exchange:**
+  - ICP/USD price feed proxied from a public market data source, no API key required
 
 ## Quick Start
 

@@ -169,6 +169,55 @@ describe('server', () => {
 		});
 	});
 
+	describe('GET /v1/exchange/price', () => {
+		it('should return price for supported ledger ID', async () => {
+			spyOn(global, 'fetch').mockImplementation((async (url: string) => {
+				if (url.includes('data-api.binance.vision')) {
+					return Response.json({ symbol: 'ICPUSDT', price: '2.23800000' });
+				}
+				return new Response('Not found', { status: 404 });
+			}) as typeof fetch);
+
+			const { app } = await import('../src/server');
+			const response = await app.handle(
+				new Request('http://localhost/v1/exchange/price/ryjl3-tyaaa-aaaaa-aaaba-cai')
+			);
+			const data = await response.json();
+
+			expect(response.status).toBe(200);
+			expect(data.price.symbol).toBe('ICPUSDT');
+			expect(data.price.price).toBe('2.23800000');
+			expect(data.price.fetchedAt).toBeString();
+		});
+
+		it('should return 500 for unsupported ledger ID', async () => {
+			const { app } = await import('../src/server');
+			const response = await app.handle(
+				new Request('http://localhost/v1/exchange/price/unknown-ledger-id')
+			);
+
+			expect(response.status).toBe(500);
+		});
+
+		it('should return 503 on exchange API error', async () => {
+			spyOn(Date, 'now').mockReturnValue(Date.now() + 61_000);
+
+			spyOn(global, 'fetch').mockImplementation((async (url: string) => {
+				if (url.includes('data-api.binance.vision')) {
+					return new Response('{}', { status: 503 });
+				}
+				return new Response('Not found', { status: 404 });
+			}) as typeof fetch);
+
+			const { app } = await import('../src/server');
+			const response = await app.handle(
+				new Request('http://localhost/v1/exchange/price/ryjl3-tyaaa-aaaaa-aaaba-cai')
+			);
+
+			expect(response.status).toBe(503);
+		});
+	});
+
 	describe('Error handling', () => {
 		it('should return 404 for unknown routes', async () => {
 			const { app } = await import('../src/server');

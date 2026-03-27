@@ -2,8 +2,9 @@ import { cors } from '@elysiajs/cors';
 import { openapi } from '@elysiajs/openapi';
 import { Elysia } from 'elysia';
 import packageJson from '../package.json';
-import { GitHubDecorator } from './decorators/github';
-import { JwtDecorator } from './decorators/jwt';
+import { GitHubDecorator } from './decorators/auth/github';
+import { JwtDecorator } from './decorators/auth/jwt';
+import { BinanceDecorator } from './decorators/exchange/binance';
 import { GitHubApiError, GitHubAuthUnauthorizedError, NullishError } from './errors';
 import {
 	githubAuthFinalize,
@@ -13,7 +14,6 @@ import {
 } from './handlers/auth/github';
 import { authJwks } from './handlers/auth/jwks';
 import { exchangePrice, ExchangePriceSchema } from './handlers/exchange/price';
-import { BinanceDecorator } from './decorators/exchange/binance';
 
 const { version: appVersion, name: appName, description: appDescription } = packageJson;
 

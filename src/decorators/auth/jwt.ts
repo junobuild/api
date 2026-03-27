@@ -7,7 +7,7 @@ import {
 	jwtVerify,
 	SignJWT
 } from 'jose';
-import { assertNonNullish } from '../utils/assert';
+import { assertNonNullish } from '../../utils/assert';
 
 const PRIVATE_KEY_PEM_PATH = process.env.JWT_PRIVATE_KEY_PATH;
 const PUBLIC_KEY_PEM_PATH = process.env.JWT_PUBLIC_KEY_PATH;

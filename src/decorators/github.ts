@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { GitHubApiError } from '../errors';
+import { FetchApiError } from '../errors';
 import { assertNonNullish } from '../utils/assert';
 
 const GitHubUserSchema = z.object({
@@ -44,7 +44,7 @@ export class GitHubDecorator {
 		});
 
 		if (!accessTokenResponse.ok) {
-			throw new GitHubApiError(
+			throw new FetchApiError(
 				accessTokenResponse.status,
 				`GitHub access token error: ${accessTokenResponse.status}`
 			);
@@ -64,7 +64,7 @@ export class GitHubDecorator {
 		});
 
 		if (!userResponse.ok) {
-			throw new GitHubApiError(userResponse.status, `GitHub API error: ${userResponse.status}`);
+			throw new FetchApiError(userResponse.status, `GitHub API error: ${userResponse.status}`);
 		}
 
 		const data = await userResponse.json();

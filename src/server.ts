@@ -2,7 +2,7 @@ import { cors } from '@elysiajs/cors';
 import { openapi } from '@elysiajs/openapi';
 import { Elysia } from 'elysia';
 import packageJson from '../package.json';
-import { BinanceDecorator } from './decorators/exchange/binance';
+import { ExchangeDecorator } from './decorators/exchange';
 import { GitHubDecorator } from './decorators/github';
 import { JwtDecorator } from './decorators/jwt';
 import { GitHubApiError, GitHubAuthUnauthorizedError, NullishError } from './errors';
@@ -47,7 +47,7 @@ export const app = new Elysia()
 	.use(cors())
 	.decorate('github', new GitHubDecorator())
 	.decorate('jwt', new JwtDecorator())
-	.decorate('binance', new BinanceDecorator())
+	.decorate('exchange', new ExchangeDecorator())
 	.group('/v1', (app) =>
 		app
 			.group('/auth', (app) =>

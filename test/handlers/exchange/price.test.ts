@@ -17,7 +17,7 @@ describe('handlers > exchange > price', () => {
 
 	it('should return price for supported ledger ID', async () => {
 		const exchange = new ExchangeDecorator();
-		spyOn(exchange, 'fetchTickerPrice').mockResolvedValueOnce(mockExchangeTickerPrice);
+		spyOn(exchange, 'fetchPrice').mockResolvedValueOnce(mockExchangeTickerPrice);
 
 		const context = {
 			exchange,
@@ -27,7 +27,7 @@ describe('handlers > exchange > price', () => {
 		const result = await exchangePrice(context);
 
 		expect(result.price).toEqual(mockExchangeTickerPrice);
-		expect(exchange.fetchTickerPrice).toHaveBeenCalledWith({ symbol: 'ICPUSDT' });
+		expect(exchange.fetchPrice).toHaveBeenCalledWith({ symbol: 'ICPUSDT' });
 	});
 
 	it('should throw for unsupported ledger ID', async () => {

@@ -20,7 +20,7 @@ describe('decorators > exchange', () => {
 		it('should fetch and return ticker price', async () => {
 			spyOn(global, 'fetch').mockResolvedValueOnce(Response.json(mockTickerPrice));
 
-			const result = await exchange.fetchTickerPrice({ symbol: 'ICPUSDT' });
+			const result = await exchange.fetchPrice({ symbol: 'ICPUSDT' });
 
 			expect(result.price).toEqual(mockTickerPrice);
 			expect(result.fetchedAt).toBeString();
@@ -30,7 +30,7 @@ describe('decorators > exchange', () => {
 		it('should call Binance API with correct URL', async () => {
 			spyOn(global, 'fetch').mockResolvedValueOnce(Response.json(mockTickerPrice));
 
-			await exchange.fetchTickerPrice({ symbol: 'ICPUSDT' });
+			await exchange.fetchPrice({ symbol: 'ICPUSDT' });
 
 			expect(global.fetch).toHaveBeenCalledWith(
 				'https://data-api.binance.vision/api/v3/ticker/price?symbol=ICPUSDT'
@@ -40,8 +40,8 @@ describe('decorators > exchange', () => {
 		it('should return cached value within TTL', async () => {
 			const fetchSpy = spyOn(global, 'fetch').mockResolvedValueOnce(Response.json(mockTickerPrice));
 
-			await exchange.fetchTickerPrice({ symbol: 'ICPUSDT' });
-			await exchange.fetchTickerPrice({ symbol: 'ICPUSDT' });
+			await exchange.fetchPrice({ symbol: 'ICPUSDT' });
+			await exchange.fetchPrice({ symbol: 'ICPUSDT' });
 
 			expect(fetchSpy).toHaveBeenCalledTimes(1);
 		});
@@ -51,11 +51,11 @@ describe('decorators > exchange', () => {
 				.mockResolvedValueOnce(Response.json(mockTickerPrice))
 				.mockResolvedValueOnce(Response.json(mockTickerPrice));
 
-			await exchange.fetchTickerPrice({ symbol: 'ICPUSDT' });
+			await exchange.fetchPrice({ symbol: 'ICPUSDT' });
 
 			spyOn(Date, 'now').mockReturnValue(Date.now() + 61_000);
 
-			await exchange.fetchTickerPrice({ symbol: 'ICPUSDT' });
+			await exchange.fetchPrice({ symbol: 'ICPUSDT' });
 
 			expect(fetchSpy).toHaveBeenCalledTimes(2);
 		});
@@ -65,8 +65,8 @@ describe('decorators > exchange', () => {
 				.mockResolvedValueOnce(Response.json({ symbol: 'ICPUSDT', price: '2.23800000' }))
 				.mockResolvedValueOnce(Response.json({ symbol: 'BTCUSDT', price: '50000.00' }));
 
-			await exchange.fetchTickerPrice({ symbol: 'ICPUSDT' });
-			await exchange.fetchTickerPrice({ symbol: 'BTCUSDT' });
+			await exchange.fetchPrice({ symbol: 'ICPUSDT' });
+			await exchange.fetchPrice({ symbol: 'BTCUSDT' });
 
 			expect(fetchSpy).toHaveBeenCalledTimes(2);
 		});
@@ -74,13 +74,13 @@ describe('decorators > exchange', () => {
 		it('should throw on Binance API error', async () => {
 			spyOn(global, 'fetch').mockResolvedValueOnce(new Response('{}', { status: 500 }));
 
-			expect(exchange.fetchTickerPrice({ symbol: 'ICPUSDT' })).rejects.toThrow(FetchApiError);
+			expect(exchange.fetchPrice({ symbol: 'ICPUSDT' })).rejects.toThrow(FetchApiError);
 		});
 
 		it('should throw on invalid response schema', async () => {
 			spyOn(global, 'fetch').mockResolvedValueOnce(Response.json({ unexpected: 'data' }));
 
-			expect(exchange.fetchTickerPrice({ symbol: 'ICPUSDT' })).rejects.toThrow();
+			expect(exchange.fetchPrice({ symbol: 'ICPUSDT' })).rejects.toThrow();
 		});
 	});
 });

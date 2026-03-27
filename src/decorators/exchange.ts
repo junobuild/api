@@ -8,20 +8,20 @@ const BinanceTickerPriceSchema = z.strictObject({
 
 type BinanceTickerPrice = z.infer<typeof BinanceTickerPriceSchema>;
 
-const ExchangeTickerPriceSchema = z.strictObject({
+const ExchangePriceSchema = z.strictObject({
 	price: BinanceTickerPriceSchema,
 	fetchedAt: z.iso.datetime()
 });
 
-type ExchangeTickerPrice = z.infer<typeof ExchangeTickerPriceSchema>;
+type ExchangePrice = z.infer<typeof ExchangePriceSchema>;
 
 const CACHE_TTL = 60_000;
 
 export class ExchangeDecorator {
-	#tickerPriceCache = new Map<BinanceTickerPrice['symbol'], ExchangeTickerPrice>();
+	#priceCache = new Map<BinanceTickerPrice['symbol'], ExchangePrice>();
 
-	fetchTickerPrice = async ({ symbol }: { symbol: string }): Promise<ExchangeTickerPrice> => {
-		const cached = this.#tickerPriceCache.get(symbol);
+	fetchPrice = async ({ symbol }: { symbol: string }): Promise<ExchangePrice> => {
+		const cached = this.#priceCache.get(symbol);
 
 		if (cached !== undefined && Date.now() < new Date(cached.fetchedAt).getTime() + CACHE_TTL) {
 			return cached;
@@ -31,7 +31,7 @@ export class ExchangeDecorator {
 
 		const tickerPrice = { price, fetchedAt: new Date().toISOString() };
 
-		this.#tickerPriceCache.set(symbol, tickerPrice);
+		this.#priceCache.set(symbol, tickerPrice);
 
 		return tickerPrice;
 	};

@@ -21,6 +21,6 @@ export const exchangePrice = async ({
 	const symbol = LEDGER_TO_SYMBOL[ledgerId];
 	assertNonNullish(symbol, 'Ledger ID not supported');
 
-	const price = await exchange.fetchTickerPrice({ symbol });
+	const price = await exchange.fetchPrice({ symbol });
 	return { price };
 };

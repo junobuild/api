@@ -5,7 +5,7 @@ import packageJson from '../package.json';
 import { ExchangeDecorator } from './decorators/exchange';
 import { GitHubDecorator } from './decorators/github';
 import { JwtDecorator } from './decorators/jwt';
-import { GitHubApiError, GitHubAuthUnauthorizedError, NullishError } from './errors';
+import { FetchApiError, GitHubAuthUnauthorizedError, NullishError } from './errors';
 import {
 	githubAuthFinalize,
 	GitHubAuthFinalizeSchema,
@@ -19,13 +19,13 @@ const { version: appVersion, name: appName, description: appDescription } = pack
 
 export const app = new Elysia()
 	.error({
-		GitHubApiError,
+		FetchApiError,
 		NullishError,
 		GitHubAuthNotInitializedError: GitHubAuthUnauthorizedError
 	})
 	.onError(({ code, error, status }) => {
 		switch (code) {
-			case 'GitHubApiError':
+			case 'FetchApiError':
 				return status(error.statusCode, error.message);
 			case 'GitHubAuthNotInitializedError':
 				return status(401, error.message);

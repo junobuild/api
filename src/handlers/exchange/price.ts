@@ -22,5 +22,5 @@ export const exchangePrice = async ({
 	assertNonNullish(symbol, 'Ledger ID not supported');
 
 	const price = await exchange.fetchPrice({ symbol });
-	return { price };
+	return { exchange: price };
 };

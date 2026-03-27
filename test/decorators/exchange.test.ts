@@ -13,6 +13,7 @@ describe('decorators > exchange', () => {
 
 	afterEach(() => {
 		mock.clearAllMocks();
+		mock.restore();
 	});
 
 	describe('fetchTickerPrice', () => {

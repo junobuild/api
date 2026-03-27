@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from 'bun:test';
-import { JwtDecorator } from '../../../src/decorators/auth/jwt';
+import { JwtDecorator } from '../../src/decorators/jwt';
 
 describe('decorators > jwt', () => {
 	let jwt: JwtDecorator;

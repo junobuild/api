@@ -11,6 +11,8 @@ This API is designed to be deployed independently, giving you full control over 
 - **GitHub:**
   - Proxy OAuth integration with JWT token generation
   - JWKS Endpoint: Public key discovery for the token verification by Juno's authentication module
+- **Exchange:**
+  - ICP/USD price feed proxied from a public market data source, no API key required
 
 ## Quick Start
 
@@ -33,9 +35,10 @@ GITHUB_AUTH_ISSUER=https://your-domain.com/auth/github
 > [!NOTE]
 > The issuer must be unique for the service. The authentication modules use it to distinguish the providers.
 
-3. (Optional) Configure cookie settings for cross-subdomain support in `.env.production`:
+3. (Optional) Configure CORS and cookie settings in `.env.production`:
 
 ```bash
+CORS_ORIGIN=https://yourapp.yourdomain.com
 COOKIE_DOMAIN=.yourdomain.com
 COOKIE_SAME_SITE=lax
 ```

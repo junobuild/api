@@ -26,7 +26,7 @@ describe('handlers > exchange > price', () => {
 
 		const result = await exchangePrice(context);
 
-		expect(result.price).toEqual(mockExchangeTickerPrice);
+		expect(result.exchange).toEqual(mockExchangeTickerPrice);
 		expect(exchange.fetchPrice).toHaveBeenCalledWith({ symbol: 'ICPUSDT' });
 	});
 

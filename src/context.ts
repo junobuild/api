@@ -1,7 +1,7 @@
 import type { Context, RouteSchema } from 'elysia';
-import type { GitHubDecorator } from './decorators/auth/github';
-import type { JwtDecorator } from './decorators/auth/jwt';
 import type { BinanceDecorator } from './decorators/exchange/binance';
+import type { GitHubDecorator } from './decorators/github';
+import type { JwtDecorator } from './decorators/jwt';
 
 export type ApiContext<Route extends RouteSchema = RouteSchema> = Context<Route> & {
 	github: GitHubDecorator;

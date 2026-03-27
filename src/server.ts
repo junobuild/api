@@ -2,9 +2,9 @@ import { cors } from '@elysiajs/cors';
 import { openapi } from '@elysiajs/openapi';
 import { Elysia } from 'elysia';
 import packageJson from '../package.json';
-import { GitHubDecorator } from './decorators/auth/github';
-import { JwtDecorator } from './decorators/auth/jwt';
 import { BinanceDecorator } from './decorators/exchange/binance';
+import { GitHubDecorator } from './decorators/github';
+import { JwtDecorator } from './decorators/jwt';
 import { GitHubApiError, GitHubAuthUnauthorizedError, NullishError } from './errors';
 import {
 	githubAuthFinalize,

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, mock } from 'bun:test';
 import type { ApiContext } from '../../../src/context';
-import { JwtDecorator } from '../../../src/decorators/auth/jwt';
+import { JwtDecorator } from '../../../src/decorators/jwt';
 import { githubAuthInit } from '../../../src/handlers/auth/github';
 
 describe('handlers > auth > github', () => {

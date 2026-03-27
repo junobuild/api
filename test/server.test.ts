@@ -33,7 +33,7 @@ describe('server', () => {
 			expect(data.state).toBeString();
 
 			// Verify the state JWT is valid
-			const { JwtDecorator } = await import('../src/decorators/jwt');
+			const { JwtDecorator } = await import('../src/decorators/auth/jwt');
 			const jwt = new JwtDecorator();
 			const verified = await jwt.verify(data.state);
 			expect(verified.valid).toBe(true);
@@ -82,7 +82,7 @@ describe('server', () => {
 			}) as typeof fetch);
 
 			// Create valid state token
-			const { JwtDecorator } = await import('../src/decorators/jwt');
+			const { JwtDecorator } = await import('../src/decorators/auth/jwt');
 			const jwt = new JwtDecorator();
 			const stateToken = await jwt.signOAuthJwt({
 				payload: {
@@ -144,7 +144,7 @@ describe('server', () => {
 		});
 
 		it('should return 401 on state mismatch', async () => {
-			const { JwtDecorator } = await import('../src/decorators/jwt');
+			const { JwtDecorator } = await import('../src/decorators/auth/jwt');
 			const jwt = new JwtDecorator();
 			const stateToken = await jwt.signOAuthJwt({
 				payload: { provider: 'github', token: 'a'.repeat(64), nonce: 'nonce' }

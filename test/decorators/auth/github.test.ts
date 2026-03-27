@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
-import { GitHubDecorator } from '../../src/decorators/github';
-import { GitHubApiError } from '../../src/errors';
+import { GitHubDecorator } from '../../../src/decorators/auth/github';
+import { GitHubApiError } from '../../../src/errors';
 
 describe('decorators > github', () => {
 	let github: GitHubDecorator;

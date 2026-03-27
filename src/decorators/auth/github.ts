@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { GitHubApiError } from '../errors';
-import { assertNonNullish } from '../utils/assert';
+import { GitHubApiError } from '../../errors';
+import { assertNonNullish } from '../../utils/assert';
 
 const GitHubUserSchema = z.object({
 	id: z.number(),

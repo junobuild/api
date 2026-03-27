@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 import type { ApiContext } from '../../../src/context';
-import { JwtDecorator } from '../../../src/decorators/jwt';
+import { JwtDecorator } from '../../../src/decorators/auth/jwt';
 import { authJwks } from '../../../src/handlers/auth/jwks';
 
 describe('handlers > auth > jwks', () => {

@@ -17,6 +17,8 @@ import { exchangePrice, ExchangePriceSchema } from './handlers/exchange/price';
 
 const { version: appVersion, name: appName, description: appDescription } = packageJson;
 
+const corsOrigin = process.env.CORS_ORIGIN;
+
 export const app = new Elysia()
 	.error({
 		FetchApiError,
@@ -44,7 +46,11 @@ export const app = new Elysia()
 			}
 		})
 	)
-	.use(cors())
+	.use(
+		cors({
+			...(corsOrigin !== undefined && { origin: corsOrigin })
+		})
+	)
 	.decorate('github', new GitHubDecorator())
 	.decorate('jwt', new JwtDecorator())
 	.decorate('exchange', new ExchangeDecorator())

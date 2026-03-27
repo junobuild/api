@@ -18,6 +18,6 @@ export const exchangePrice = async ({ query, exchange }: ApiContext<{ query: Exc
 	const symbol = LEDGER_TO_SYMBOL[ledgerId];
 	assertNonNullish(symbol, 'Ledger ID not supported');
 
-	const price = await exchange.fetchTickerPriceWithCache({ symbol });
+	const price = await exchange.fetchTickerPrice({ symbol });
 	return { price };
 };

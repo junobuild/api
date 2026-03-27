@@ -19,7 +19,7 @@ const CACHE_TTL = 60_000;
 export class ExchangeDecorator {
 	#tickerPriceCache = new Map<BinanceTickerPrice['symbol'], ExchangeTickerPrice>();
 
-	fetchTickerPriceWithCache = async ({
+	fetchTickerPrice = async ({
 		symbol
 	}: {
 		symbol: string;
